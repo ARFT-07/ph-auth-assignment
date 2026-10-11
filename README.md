@@ -18,14 +18,13 @@ versus yesterday, and the per-market price range across Bangladesh's divisions.
 
 ## 🧰 Technologies
 
-Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · DaisyUI 5 · Better Auth · PostgreSQL (`pg`) · react-hot-toast · Noto Sans Bengali
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · DaisyUI 5 · Better Auth · MongoDB · react-hot-toast · Noto Sans Bengali
 
 ## 🚀 Getting started
 
 ```bash
 npm install
 cp .env.example .env.local        # fill in the values
-npx @better-auth/cli migrate      # creates the auth tables in your Postgres DB
 npm run dev
 ```
 
@@ -33,7 +32,7 @@ npm run dev
 
 | Name | Purpose |
 | --- | --- |
-| `DATABASE_URL` | Postgres connection string (Neon, Supabase, Vercel Postgres …) |
+| `MONGODB_URI` | MongoDB connection string incl. database name (e.g. Atlas) |
 | `BETTER_AUTH_SECRET` | Random secret (`openssl rand -base64 32`) |
 | `BETTER_AUTH_URL` | Public site URL (`http://localhost:3000` locally, your Vercel URL in production) |
 | `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth (redirect URI: `<BETTER_AUTH_URL>/api/auth/callback/google`) |
@@ -44,7 +43,7 @@ A social button only works once its client id/secret pair is set.
 
 ## ☁️ Deploying to Vercel
 
-1. Create a hosted Postgres database and run `npx @better-auth/cli migrate` against its `DATABASE_URL`.
+1. Create a MongoDB Atlas cluster (allow access from anywhere, `0.0.0.0/0`, for Vercel) — collections are created automatically, no migration needed.
 2. Import the repo in Vercel and add the environment variables above (`BETTER_AUTH_URL` = your Vercel URL).
 3. Add the Vercel URL's callback URLs to your Google / GitHub OAuth apps.
 
