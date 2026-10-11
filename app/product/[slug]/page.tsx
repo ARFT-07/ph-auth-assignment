@@ -19,7 +19,7 @@ export default async function ProductPage({ params }: Props) {
 
   const s = stats(p);
   const diff = p.today - p.yesterday;
-  const summary = `${p.nameBn}ের আজকের গড় বাজারদর ${price(s.avg)} (${unitLabel(p.unit)})। ${
+  const summary = `${p.nameBn} — আজকের গড় বাজারদর ${price(s.avg)} (${unitLabel(p.unit)})। ${
     diff === 0
       ? "গতকালের তুলনায় দাম অপরিবর্তিত আছে।"
       : `গতকালের তুলনায় ${price(Math.abs(diff))} ${diff > 0 ? "বেড়েছে" : "কমেছে"}।`
