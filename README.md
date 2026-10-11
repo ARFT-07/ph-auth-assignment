@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 বাজার দর — BazarDor
 
-## Getting Started
+প্রয়োজনীয় পণ্যের (চাল, ডাল, তেল, সবজি, মাছ, মাংস, ডিম-দুধ, মসলা) **আজকের বাজারদর এক নজরে**।
+BazarDor is a Bengali-first grocery price tracker: see today's price, whether it went up or down
+versus yesterday, and the per-market price range across Bangladesh's divisions.
 
-First, run the development server:
+- **Live link:** _add your Vercel URL here_
+- **Data source:** `https://openapi.programming-hero.com/api/bazardor` (with automatic fallback to the two mirror URLs)
+
+## ✨ Key features
+
+1. **Live price ticker & rise/fall sections** – an infinite marquee under the navbar plus "আজ দাম বেড়েছে ▲" / "আজ দাম কমেছে ▼" (top 6 each) with green/red/grey change badges and Bengali numerals.
+2. **Category pages with sorting** – skeleton loading, empty/404 states, and a `সাজান` dropdown (ডিফল্ট / কম থেকে বেশি / বেশি থেকে কম) that sorts on the numeric price, not the Bengali string.
+3. **Protected product details** – min / max / average price, history (yesterday, last week, last month) and a division-wise table of every market's price range. Visitors who are not signed in are redirected to sign in with a toast.
+4. **Authentication with Better Auth** – email + password, Google and GitHub login, validation errors and success toasts, auto-redirects.
+5. **Profile & update information** – `/profile` shows the user; the update button opens a form that changes the name via Better Auth's `updateUser`.
+6. **Fully responsive** – mobile, tablet and desktop layouts; scrollable category nav on small screens; custom 404 page with a "হোম পেজে ফিরে যান" button.
+
+## 🧰 Technologies
+
+Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · DaisyUI 5 · Better Auth · PostgreSQL (`pg`) · react-hot-toast · Noto Sans Bengali
+
+## 🚀 Getting started
 
 ```bash
+npm install
+cp .env.example .env.local        # fill in the values
+npx @better-auth/cli migrate      # creates the auth tables in your Postgres DB
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Name | Purpose |
+| --- | --- |
+| `DATABASE_URL` | Postgres connection string (Neon, Supabase, Vercel Postgres …) |
+| `BETTER_AUTH_SECRET` | Random secret (`openssl rand -base64 32`) |
+| `BETTER_AUTH_URL` | Public site URL (`http://localhost:3000` locally, your Vercel URL in production) |
+| `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` | Google OAuth (redirect URI: `<BETTER_AUTH_URL>/api/auth/callback/google`) |
+| `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET` | GitHub OAuth (callback: `<BETTER_AUTH_URL>/api/auth/callback/github`) |
+| `API_BASE_URL` | _Optional._ Overrides the price API base URL |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+A social button only works once its client id/secret pair is set.
 
-## Learn More
+## ☁️ Deploying to Vercel
 
-To learn more about Next.js, take a look at the following resources:
+1. Create a hosted Postgres database and run `npx @better-auth/cli migrate` against its `DATABASE_URL`.
+2. Import the repo in Vercel and add the environment variables above (`BETTER_AUTH_URL` = your Vercel URL).
+3. Add the Vercel URL's callback URLs to your Google / GitHub OAuth apps.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Dynamic routes (`/category/[slug]`, `/product/[slug]`) are server-rendered, so reloading any page works.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 📁 Structure
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+app/            routes (home, category, product, signin, signup, profile, API handler)
+components/     Navbar, Ticker, Hero, ProductCard, forms …
+lib/            api client, formatting (Bengali numerals), Better Auth server/client
+```
