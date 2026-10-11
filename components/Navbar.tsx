@@ -2,19 +2,15 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
-import { bnDate } from "@/lib/format";
+import BnDate from "./BnDate";
 import type { Category } from "@/lib/api";
 
 export default function Navbar({ categories }: { categories: Category[] }) {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
-  const [date, setDate] = useState("");
-
-  useEffect(() => setDate(bnDate()), []);
 
   async function signOut() {
     await authClient.signOut({
@@ -42,8 +38,12 @@ export default function Navbar({ categories }: { categories: Category[] }) {
     <header className="sticky top-0 z-40 border-b border-base-300 bg-base-100/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-x-4 gap-y-2 px-4 py-2">
         <Link href="/" className="flex flex-col leading-tight">
-          <span className="text-xl font-bold text-primary">🛒 বাজার দর</span>
-          <span className="min-h-4 text-xs text-base-content/60">{date}</span>
+          <span className="flex items-center gap-2 text-xl font-bold text-primary">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-icon.png" alt="" className="size-8 object-contain" />
+            বাজার দর
+          </span>
+          <BnDate className="min-h-4 text-xs text-base-content/60" />
         </Link>
 
         <nav
@@ -83,6 +83,7 @@ export default function Navbar({ categories }: { categories: Category[] }) {
                 <span className="hidden max-w-28 truncate sm:inline">
                   {session.user.name}
                 </span>
+                <span className="text-xs" aria-hidden>▾</span>
               </button>
               <ul
                 tabIndex={0}

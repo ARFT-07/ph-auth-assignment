@@ -11,6 +11,7 @@ import { getCategories, type Category } from "@/lib/api";
 export const metadata: Metadata = {
   title: { default: "বাজার দর — BazarDor", template: "%s | বাজার দর" },
   description: "প্রয়োজনীয় পণ্যের দৈনিক বাজারদর এক নজরে।",
+  icons: { icon: "/logo-icon.png", apple: "/logo-icon.png" },
 };
 
 export default async function RootLayout({

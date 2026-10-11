@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import Hero from "@/components/Hero";
 import ProductGrid, { GridSkeleton } from "@/components/ProductGrid";
 import { getProducts } from "@/lib/api";
+import { bn } from "@/lib/format";
 
 function Section({
   id,
@@ -37,16 +38,16 @@ async function Sections() {
 
   return (
     <>
-      <Section title={<>আজ দাম বেড়েছে <span className="text-success">▲</span></>}>
+      <Section title={<><span className="text-success">▲</span> আজ দাম বেড়েছে</>}>
         <ProductGrid items={risers} />
       </Section>
-      <Section title={<>আজ দাম কমেছে <span className="text-error">▼</span></>}>
+      <Section title={<><span className="text-error">▼</span> আজ দাম কমেছে</>}>
         <ProductGrid items={fallers} />
       </Section>
       <Section
         id="সব-পণ্য"
         title="সব পণ্য"
-        subtitle="যেকোনো পণ্যে ক্লিক করে বাজারভিত্তিক বিস্তারিত দাম দেখুন"
+        subtitle={`মোট ${bn(products.length)}টি পণ্য দেখানো হচ্ছে`}
       >
         <ProductGrid items={products} />
       </Section>

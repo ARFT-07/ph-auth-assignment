@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import type { Product } from "@/lib/api";
 import ProductGrid from "./ProductGrid";
 import EmptyState from "./EmptyState";
+import { bn } from "@/lib/format";
 
 type Sort = "default" | "asc" | "desc";
 
@@ -29,9 +30,16 @@ export default function CategoryList({ items }: { items: Product[] }) {
 
   return (
     <>
-      <div className="mb-4 flex items-center justify-end gap-2">
+      <p className="-mt-2 mb-5 text-base-content/60">
+        {bn(items.length)}টি পণ্যের আজকের দাম ও পরিবর্তন
+      </p>
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+        <p className="text-sm text-base-content/60">
+          মোট {bn(items.length)}টি পণ্য দেখানো হচ্ছে
+        </p>
+        <div className="flex items-center gap-2">
         <label htmlFor="sort" className="text-sm font-medium">
-          সাজান:
+          সাজান
         </label>
         <select
           id="sort"
@@ -43,6 +51,7 @@ export default function CategoryList({ items }: { items: Product[] }) {
           <option value="asc">দাম: কম থেকে বেশি</option>
           <option value="desc">দাম: বেশি থেকে কম</option>
         </select>
+        </div>
       </div>
       <ProductGrid items={sorted} />
     </>

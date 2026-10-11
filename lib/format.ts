@@ -35,3 +35,13 @@ export function bnDate(d = new Date()) {
     timeZone: "Asia/Dhaka",
   }).format(d);
 }
+
+/** Average price: whole numbers plain, otherwise two decimals (৬৩.৫০). */
+export function avgText(n: number) {
+  return Number.isInteger(n)
+    ? nf.format(n)
+    : new Intl.NumberFormat("bn-BD", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      }).format(n);
+}

@@ -30,7 +30,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     autoSignIn: false, // after sign-up the user is sent to the sign-in page
-    minPasswordLength: 6,
+    minPasswordLength: 8,
   },
   socialProviders: social,
   plugins: [nextCookies()],
