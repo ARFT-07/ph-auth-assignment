@@ -10,7 +10,7 @@ function Section({
   children,
 }: {
   id?: string;
-  title: string;
+  title: React.ReactNode;
   subtitle?: string;
   children: React.ReactNode;
 }) {
@@ -37,10 +37,10 @@ async function Sections() {
 
   return (
     <>
-      <Section title="আজ দাম বেড়েছে ▲">
+      <Section title={<>আজ দাম বেড়েছে <span className="text-success">▲</span></>}>
         <ProductGrid items={risers} />
       </Section>
-      <Section title="আজ দাম কমেছে ▼">
+      <Section title={<>আজ দাম কমেছে <span className="text-error">▼</span></>}>
         <ProductGrid items={fallers} />
       </Section>
       <Section
