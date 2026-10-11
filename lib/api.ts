@@ -30,6 +30,7 @@ export type Category = {
 };
 
 const BASES = [
+  ...(process.env.API_BASE_URL ? [process.env.API_BASE_URL] : []),
   "https://openapi.programming-hero.com/api/bazardor",
   "https://api.api-store.workers.dev/api/bazardor",
   "https://api.abcz.workers.dev/api/bazardor",
