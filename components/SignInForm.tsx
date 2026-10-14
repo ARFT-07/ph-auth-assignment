@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
@@ -10,9 +10,8 @@ import ToastFromQuery from "./ToastFromQuery";
 
 export default function SignInForm() {
   const router = useRouter();
-  const params = useSearchParams();
-  const raw = params.get("next") ?? "/";
-  const next = raw.startsWith("/") && !raw.startsWith("//") ? raw : "/";
+  // Requirement: after a successful login the user lands on the Home page.
+  const next = "/";
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   // keep the form disabled until hydrated so it can never fall back to a native GET submit
